@@ -65,6 +65,8 @@ p.interactive()
 ### Advanced usage(IO FILE)
 
 ```
+from pwn_debug import *
+
 fake_file=IO_FILE_plus()
 fake_file._IO_write_ptr=1 # set _IO_write_ptr
 fake_file._IO_write_base=0
