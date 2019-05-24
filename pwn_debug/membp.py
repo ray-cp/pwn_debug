@@ -58,7 +58,7 @@ class membp(object):
                             self.pie=0
                             log.info("PIE DISABLED")
                         else:
-                            log.erroe("unknown pie")
+                            log.error("unknown pie")
                         self.elf_base=addr
                         log.info("programe base: %s"%hex(self.elf_base))
                         return

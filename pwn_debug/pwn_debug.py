@@ -52,9 +52,9 @@ class pwn_debug(object):
                 else:
                     log.error("elf with a unknow arch")
                 endian=u8(fd.read(1))
-                if arch==2:
+                if endian==2:
                     self.endian="little"
-                elif arch==1:
+                elif endian==1:
                     self.endian="big"
                 else:
                     log.error("elf with a unknow endian")
