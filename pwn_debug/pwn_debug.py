@@ -3,6 +3,7 @@ import shutil
 #import time
 import os
 from membp import membp
+from ret2dl_resolve import ret2dl_resolve
 
 class pwn_debug(object):
     def __init__(self,pwn_name=""):
@@ -195,6 +196,10 @@ class pwn_debug(object):
             return
         #self.membp=membp(self.process)
         self.membp.breakpoint(address_list,fork_follow,command)
+
+    def ret2dl_resolve(self):
+        self.ret2dl_resolve=ret2dl_resolve(self)
+        return self.ret2dl_resolve
 
 
 

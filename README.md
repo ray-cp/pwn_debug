@@ -62,7 +62,7 @@ p.interactive()
 
 ```
 
-### Advanced usage(IO FILE)
+### IO FILE
 
 ```
 from pwn_debug import *
@@ -84,6 +84,28 @@ fake_file.arbitrary_write_check("stdin") # check if the IO FILE can arbitrary wr
 fake_file.arbitrary_write_check("stdout") # check if the IO FILE can arbitrary write in stdout handle
 
 print str(fake_file)
+```
+
+### ret2dl_resolve
+
+x86 with fake reloc_arg:
+```
+ret2dl_resolve=pdbg.ret2dl_resolve()
+
+addr,resolve_data,resovle_call=ret2dl_resolve.build_normal_resolve(bss_addr,'system',bss_addr+0x400)
+
+payload=resolve_data+'a'*0x44+resovle_call
+```
+
+x64 with fake link_map:
+
+```
+offset=libc.symbols['system']-libc.symbols['__libc_start_main']
+got_libc_address=elf.got['__libc_start_main']
+ret2dl_resolve=pdbg.ret2dl_resolve()
+# fake_link_map address is addr+0x100 
+fake_link_map=ret2dl_resolve.build_link_map(addr+0x100,1,offset,got_libc_address)
+payload+=fake_link_map
 ```
 
 
