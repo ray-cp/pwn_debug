@@ -33,8 +33,23 @@ class membp(object):
     def set_basic_info(self):
          
         self.pid=proc.pidof(self.process)[0]
-        self.get_libc_base()
         self.get_elf_base()
+        self.get_libc_base()
+        self.get_stack_base()
+
+    
+    def get_stack_base(self):
+        with open('/proc/%s/maps' % self.pid) as maps:
+            for line in maps:
+                #print line
+                name=line.split("/")[-1]
+                if "[stack]" in name:
+                    addr = int(line.split('-')[0], 16)
+                    self.stack_base=addr
+                    log.info("stack base: %s"%hex(self.stack_base))
+                    return
+        log.info("can't not found stack base!!")
+
     def get_elf_base(self):
         name = os.readlink('/proc/%s/exe' % self.pid)
         with open('/proc/%s/maps' % self.pid) as maps:

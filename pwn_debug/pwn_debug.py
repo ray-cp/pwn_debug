@@ -4,6 +4,7 @@ import shutil
 import os
 from membp import membp
 from ret2dl_resolve import ret2dl_resolve
+import fmtstr
 
 class pwn_debug(object):
     def __init__(self,pwn_name=""):
@@ -200,6 +201,18 @@ class pwn_debug(object):
     def ret2dl_resolve(self):
         self.ret2dl_resolve=ret2dl_resolve(self)
         return self.ret2dl_resolve
+
+     
+    def fmtstr_payload(self,offset, writes, write_size='byte',numbwritten=0):
+        return fmtstr.fmtstr_payload(offset,writes,write_size,numbwritten)
+
+    def fmtstr_hn_complete(self,offset,write_payload):
+        return fmtstr.format_hn_write(offset,write_payload)
+
+    
+    def fmtstr_hn_payload(self,offset,write_payload):
+        return fmtstr.fmtstr_hn_payload(offset,write_payload)
+
 
 
 

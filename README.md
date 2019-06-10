@@ -108,4 +108,15 @@ fake_link_map=ret2dl_resolve.build_link_map(addr+0x100,1,offset,got_libc_address
 payload+=fake_link_map
 ```
 
+### format_string
+
+```
+payload=pdbg.fmtstr_payload(offset, writes, write_size='short',numbwritten):
+
+payload=pdbg.format_hn_complete(offset,write_payload)
+
+payload=pdbg.fmtstr_hn_payload(self,offset,write_payload)
+```
+
+
 
