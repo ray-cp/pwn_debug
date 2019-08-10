@@ -124,7 +124,7 @@ def fmtstr_payload(offset, writes, write_size='byte',numbwritten=0):
 
 
 # 4bytes write per step, offset should be the index of memory which you can control, and write_payload should be a dict which is address:value pair, it will return all the fromat string including the addr list.
-def format_hn_complete(offset,write_payload):
+def fmtstr_hn_complete(offset,write_payload):
     #print write_payload
     addr_list=[]
     value_dict={}
