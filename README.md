@@ -113,7 +113,7 @@ payload+=fake_link_map
 ```
 payload=pdbg.fmtstr_payload(offset, writes, write_size='short',numbwritten):
 
-payload=pdbg.format_hn_complete(offset,write_payload)
+payload=pdbg.fmtstr_hn_complete(offset,write_payload)
 
 payload=pdbg.fmtstr_hn_payload(self,offset,write_payload)
 ```

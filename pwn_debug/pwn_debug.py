@@ -207,7 +207,7 @@ class pwn_debug(object):
         return fmtstr.fmtstr_payload(offset,writes,write_size,numbwritten)
 
     def fmtstr_hn_complete(self,offset,write_payload):
-        return fmtstr.format_hn_write(offset,write_payload)
+        return fmtstr.fmtstr_hn_complete(offset,write_payload)
 
     
     def fmtstr_hn_payload(self,offset,write_payload):
