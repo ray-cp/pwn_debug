@@ -1,0 +1,12 @@
+Metadata-Version: 1.2
+Name: pwn-debug
+Version: 0.2.0
+Summary: pwn_debug: easy to libc source code debug and make breakpoint
+Home-page: ray-cp.github.io
+Author: raycp
+Author-email: raycp@protonmail.com
+Maintainer: raycp
+Maintainer-email: raycp
+License: Public domain
+Description: easy to libc source code debug and make breakpoint.
+Platform: any
