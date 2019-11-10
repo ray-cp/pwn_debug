@@ -81,7 +81,7 @@ class membp(object):
         exit(1)
 
     
-    def breakpoint(self,address_list,fork_follow="child",command=[]):
+    def breakpoint(self,address_list,fork_follow="child",command=[],sym):
         
         debug_stri="set follow-fork-mode %s\n"%fork_follow
         
@@ -98,5 +98,12 @@ class membp(object):
         
         for com in command:
             debug_stri+=com+"\n"
+
+        if self.pie:
+            for k,v in sym:
+                debug_stri+='set $'+str(k)+'='+str(v+self.elf_base)+'\n'
+        else:
+            for k,v in sym:
+                debug_stri+='set $'+str(k)+'='+str(v)+'\n'
         gdb.attach(self.process, debug_stri)
 
