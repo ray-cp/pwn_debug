@@ -19,6 +19,7 @@ class pwn_debug(object):
         self.get_pwn_class()
         self.context.arch=self.arch
         self.context.endian=self.endian
+        self.sym={}
         #self.set_default()
 
     # get class from pwn including: context

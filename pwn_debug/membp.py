@@ -98,7 +98,7 @@ class membp(object):
         
         for com in command:
             debug_stri+=com+"\n"
-
+        print sym
         if self.pie:
             for k,v in sym.items():
                 debug_stri+='set $'+str(k)+'='+str(v+self.elf_base)+'\n'
