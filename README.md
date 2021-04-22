@@ -10,7 +10,7 @@ Here is just a simple description.
 
 * Install pwn_debug
 ```
-git clone https://github.com/now4yreal/pwn_debug.git
+git clone https://github.com/ray-cp/pwn_debug.git
 cd pwn_debug
 sudo python setup.py install 
 # or python setup.py install --user
