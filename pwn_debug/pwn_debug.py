@@ -12,13 +12,14 @@ class pwn_debug(object):
         self.pwn_path="/tmp/"+pwn_name 
         #context.terminal = ['tmux', 'splitw', '-h']
         self.get_basic_info()
-        log.info("ELF arch: %s"%self.arch)
-        log.info("ELF endian: %s"%self.endian)
+        #log.info("ELF arch: %s"%self.arch)
+        #log.info("ELF endian: %s"%self.endian)
 
         ## get some class from pwn
         self.get_pwn_class()
         self.context.arch=self.arch
         self.context.endian=self.endian
+        self.sym={}
         #self.set_default()
 
     # get class from pwn including: context
@@ -143,8 +144,8 @@ class pwn_debug(object):
         cmd='patchelf --set-interpreter '+self.debug_ld_path+' '+self.pwn_path
         os.system(cmd)
         sleep(0.2)
-        self.elf=ELF(self.pwn_path)
-        self.libc=ELF(self.debug_libc_path)
+        self.elf=ELF(self.pwn_path,checksec=False)
+        self.libc=ELF(self.debug_libc_path,checksec=False)
         
         self.process = process( self.pwn_path, env=self.debug_env)
         return self.process
@@ -162,14 +163,14 @@ class pwn_debug(object):
             os.system(cmd)
             sleep(0.2)
         ### set libc library
-        self.elf=ELF(self.pwn_path)
+        self.elf=ELF(self.pwn_path,checksec=False)
         if self.local_libc_path:
-            self.libc=ELF(self.local_libc_path)
+            self.libc=ELF(self.local_libc_path,checksec=False)
         else:
             if self.arch=="amd64":
-                self.libc=ELF("/lib/x86_64-linux-gnu/libc.so.6")
+                self.libc=ELF("/lib/x86_64-linux-gnu/libc.so.6",checksec=False)
             elif self.arch=="x86":
-                self.libc=ELF("/lib/i386-linux-gnu/libc.so.6")
+                self.libc=ELF("/lib/i386-linux-gnu/libc.so.6",checksec=False)
         ### start process
         self.process=process(self.pwn_path,env=self.local_env)
         return self.process
@@ -178,14 +179,14 @@ class pwn_debug(object):
     def run_remote(self):
         ### set libc library
         if self.pwn_name:
-            self.elf=ELF(self.pwn_name)
+            self.elf=ELF(self.pwn_name,checksec=False)
         if self.remote_libc_path:
-            self.libc=ELF(self.remote_libc_path)
+            self.libc=ELF(self.remote_libc_path,checksec=False)
         else:
             if self.arch=="amd64":
-                self.libc=ELF("/lib/x86_64-linux-gnu/libc.so.6")
+                self.libc=ELF("/lib/x86_64-linux-gnu/libc.so.6",checksec=False)
             elif self.arch=="x86":
-                self.libc=ELF("/lib/i386-linux-gnu/libc.so.6")
+                self.libc=ELF("/lib/i386-linux-gnu/libc.so.6",checksec=False)
 
         ### start remote connect
         self.remote=remote(self.remote_host,self.remote_port)
@@ -196,7 +197,10 @@ class pwn_debug(object):
             log.info("breakpoint ignored for remote connect")
             return
         #self.membp=membp(self.process)
-        self.membp.breakpoint(address_list,fork_follow,command)
+        self.membp.breakpoint(address_list=address_list,fork_follow=fork_follow,command=command,sym=self.sym)
+
+    def sym(self,sym):
+    	self.sym=sym
 
     def ret2dl_resolve(self):
         self.ret2dl_resolve=ret2dl_resolve(self)

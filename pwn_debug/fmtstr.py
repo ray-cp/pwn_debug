@@ -67,7 +67,8 @@ def fmtstr_payload(offset, writes, write_size='byte',numbwritten=0):
             payload += pack(where+i)
 
 
-    numbwritten = 0
+    #numbwritten = 0
+    saved_num=numbwritten
     fmtCount = 0
     tmp_payload=""
     for where, what in writes.items():
@@ -77,7 +78,6 @@ def fmtstr_payload(offset, writes, write_size='byte',numbwritten=0):
                 to_add = current - (numbwritten & mask)
             else:
                 to_add = (current | (mask+1)) - (numbwritten & mask)
-
             if to_add != 0:
                 tmp_payload += "%{}c".format(to_add)
             tmp_payload += "%{}${}n".format(offset + fmtCount, formatz)
@@ -93,7 +93,7 @@ def fmtstr_payload(offset, writes, write_size='byte',numbwritten=0):
 
 
     fmtCount=len(tmp_payload)/(context.bits/8)
-    numbwritten = 0
+    numbwritten = saved_num
     payload=""
     for where, what in writes.items():
         for i in range(0, number):
@@ -111,7 +111,7 @@ def fmtstr_payload(offset, writes, write_size='byte',numbwritten=0):
             what >>= decalage
             fmtCount += 1
 
-    payload=payload.ljust(payload_len,'a')
+    payload=payload.ljust(payload_len,'\x00')
 
     for where, what in writes.items():
         for i in range(0, number*step, step):

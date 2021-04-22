@@ -10,7 +10,7 @@ Here is just a simple description.
 
 * Install pwn_debug
 ```
-git clone https://github.com/ray-cp/pwn_debug.git
+git clone https://github.com/now4yreal/pwn_debug.git
 cd pwn_debug
 sudo python setup.py install 
 # or python setup.py install --user
@@ -118,5 +118,5 @@ payload=pdbg.fmtstr_hn_complete(offset,write_payload)
 payload=pdbg.fmtstr_hn_payload(self,offset,write_payload)
 ```
 
-
-
+## Update Log
+2020.4.21: Add sym feature, eg. pdbg.sym={'chunk':0x202020}, regardless of PIE or not.
